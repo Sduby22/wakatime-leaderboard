@@ -1,25 +1,36 @@
 <template>
-  <login />
+  <div class="leaderboards">
+    <leaderboards />
+  </div>
+  <div class="login">
+    <login />
+  </div>
 </template>
 
 <script>
+import leaderboards from './components/leaderboards.vue'
 import login from './components/login.vue'
 
 export default {
   name: 'App',
   components: {
-    login
+    login,
+    leaderboards,
   }
 }
 </script>
 
 <style>
 #app {
-  font-family: Avenir, Helvetica, Arial, sans-serif;
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
-  text-align: center;
   color: #2c3e50;
-  margin-top: 60px;
+  margin-top: 20px;
 }
+
+.login {
+  display: inline-block;
+}
+
+  .leaderboards {
+    display: inline-block;
+  }
 </style>
