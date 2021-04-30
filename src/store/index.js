@@ -1,7 +1,7 @@
 import { createStore } from 'vuex'
 import { login, register } from '../service/userService.js'
 
-let state = {user: null}
+let state = { user: null }
 let user = localStorage.getItem('user')
 if (user) state.user = user
 
@@ -13,28 +13,28 @@ export default createStore({
     },
     loginFailure(state) {
       state.user = null
-    }, 
+      localStorage.removeItem('user')
+    },
     logout(state) {
       state.user = null
+      localStorage.removeItem('user')
     }
   },
-  actions: {
-    login ({ commit }, user) {
-      login(user).then( user => {
-        commit('loginSuccess', user)
-      })
-      .catch(() => {
-        console.log('login failed !')
-        commit('loginFailure')
-        })
-    },
 
-    logout({commit}) {
+  actions: {
+    login({ commit }, user) {
+      return login(user).then(user => {
+        commit('loginSuccess', user)
+      }).catch(() => {
+        commit('loginFailure')
+        return Promise.reject('failed')
+      })
+    },
+    logout({ commit }) {
       commit('logout')
     },
-
-    register ({dispatch}, user) {
-      register(user).then(dispatch('login', user))
+    register({ commit }, user) {
+      return register(user).then(e => { commit('loginSuccess', e) })
     }
   },
   modules: {
