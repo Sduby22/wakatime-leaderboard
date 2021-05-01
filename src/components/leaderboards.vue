@@ -17,7 +17,7 @@
       </tr>
       <tr v-for="(e, index) of leaderboards" :key="e.NAME">
         <th class="row">{{ index + 1 }}</th>
-        <th class="row" ><a :href="'https://wakatime.com/@'+e.WAKA_ID">{{ e.NICKNAME }}</a></th>
+        <th class="row" ><a :href="'https://wakatime.com/@'+e.WAKA_ID">{{ e.NICKNAME ? e.NICKNAME : e.NAME }}</a></th>
         <th class="row">{{ e.TOTAL }}</th>
         <th class="row">{{ e.AVG }}</th>
         <th class="row">{{ e.LANGUAGES }}</th>

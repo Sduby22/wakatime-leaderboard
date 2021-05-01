@@ -58,7 +58,7 @@ function secHumanify(sec, simple=0) {
   let min = Math.round(sec/60)
   let remainder = min - hr*60
   let res = ''
-  if (simple) {
+  if (!simple) {
     res = hr > 0 ? `${hr} hrs ` : ''
     res += `${remainder} mins`
   } else {
