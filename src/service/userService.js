@@ -1,5 +1,7 @@
 import axios from 'axios'
 
+const simple = 1
+
 function authHeaders() {
   let user = JSON.parse(localStorage.getItem('user'))
   if (user && user.jwt) {
@@ -51,12 +53,18 @@ function editProfile(profile) {
   })
 }
 
-function secHumanify(sec) {
+function secHumanify(sec, simple=0) {
   let hr = Math.round(sec/3600)
   let min = Math.round(sec/60)
   let remainder = min - hr*60
-  let res = hr > 0 ? `${hr} hrs ` : ''
-  res += `${remainder} mins`
+  let res = ''
+  if (simple) {
+    res = hr > 0 ? `${hr} hrs ` : ''
+    res += `${remainder} mins`
+  } else {
+    res = hr > 0 ? `${hr}h` : ''
+    res += `${remainder}m`
+  }
   return res
 }
   
@@ -70,8 +78,8 @@ function getLeaderBoards() {
       let data = resp.data
       data.sort((a,b) => {return b.TOTAL - a.TOTAL})
       for (let x in data) {
-        data[x].TOTAL = secHumanify(data[x].TOTAL)
-        data[x].AVG = secHumanify(data[x].AVG)
+        data[x].TOTAL = secHumanify(data[x].TOTAL, simple)
+        data[x].AVG = secHumanify(data[x].AVG, simple)
       }
       return data
   })
