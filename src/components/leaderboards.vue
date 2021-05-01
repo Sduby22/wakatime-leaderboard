@@ -13,6 +13,7 @@
         <th class="head">Day.Avg</th>
         <th class="head">Languages</th>
         <th class="head">Editors</th>
+        <th class="head">OS</th>
       </tr>
       <tr v-for="(e, index) of leaderboards" :key="e.NAME">
         <th class="row">{{ index + 1 }}</th>
@@ -21,6 +22,7 @@
         <th class="row">{{ e.AVG }}</th>
         <th class="row">{{ e.LANGUAGES }}</th>
         <th class="row">{{ e.EDITORS }}</th>
+        <th class="row">{{ e.SYSTEMS }}</th>
       </tr>
     </tbody>
   </table>
