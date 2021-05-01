@@ -25,9 +25,9 @@ export default createStore({
     login({ commit }, user) {
       return login(user).then(user => {
         commit('loginSuccess', user)
-      }).catch(() => {
+      }).catch((e) => {
         commit('loginFailure')
-        return Promise.reject('failed')
+        return Promise.reject(e)
       })
     },
     logout({ commit }) {

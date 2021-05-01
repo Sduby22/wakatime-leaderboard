@@ -31,6 +31,7 @@
       <input @click="islogin=true" type="button" value="login">
     </div>
   </form> 
+  <p class="error">{{error}}</p>
 </template>
 
 <script>
@@ -50,6 +51,7 @@ export default {
     var username = ref('')
     var password = ref('')
     var confirm = ref('')
+    var error = ref('')
 
     const getmd5 = (str) => {
       const salt = "823hd9"
@@ -75,6 +77,9 @@ export default {
       }
       dispatch('login', user).then(() => {
         window.location.reload()
+        error.value = ''
+      }).catch(e => {
+        error.value = e.response.data.msg
       })
     }
 
@@ -85,9 +90,13 @@ export default {
       }
       dispatch('register', user).then(() => {
         window.location.reload()
+        error.value = ''
+      }).catch(e => {
+        error.value = e.response.data.msg
       })
     }
     return {
+      error,
       validateConfirm,
       islogin,
       login,
@@ -113,5 +122,9 @@ export default {
   }
   form>div>* {
     display: table-cell;
+  }
+  .error {
+    font-size: 12px;
+    color: red;
   }
 </style>
