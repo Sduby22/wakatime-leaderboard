@@ -1,9 +1,10 @@
 <template>
   <form @submit.prevent="changeInfo" v-if="user">
-    <div class="info" v-for="(value, key) of userProfile" :key="key">
+    <div class="info" v-for="(value, key) of userProfilevFor" :key="key">
       <label :for="key">{{ key }}: </label>
       <input type="text" :id="key" :name="key" :disabled="!editing || key==='NAME'" v-model="userProfile[key]">
     </div>
+    <p class="invalid" v-if="userProfile.INVALID">Invalid WAKA_ID or profile unaccessible!</p>
     <div class="buttons">
       <input type="submit" value="submit" v-show="editing">
       <input type="button" value="cancel" @click="editing=0" v-show="editing">
@@ -24,7 +25,12 @@ import { editProfile, profile } from '../service/userService.js'
 
 export default {
   computed: {
-    ...mapState(['user'])
+    ...mapState(['user']),
+    userProfilevFor() {
+      let a = {...this.userProfile}
+      delete a.INVALID
+      return a
+    }
   },
   methods: {
     ...mapActions(['logout']),
@@ -72,5 +78,10 @@ export default {
   .recommend {
     font-size: 10px;
     width: 200px;
+  }
+  .invalid {
+    color: red;
+    font-size: 10px;
+    margin: 0;
   }
 </style>
