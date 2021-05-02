@@ -1,4 +1,6 @@
 <template>
+  <div class="main">
+  <div class="refresh" @click="refresh">refresh</div>
   <table border="1">
     <thead>
       <tr>
@@ -26,6 +28,7 @@
       </tr>
     </tbody>
   </table>
+  </div>
 </template>
 
 <script>
@@ -41,13 +44,16 @@ export default {
 
     if (store.state.user) {
       getLeaderBoards().then(e => leaderboards.value = e)
-      setInterval(() => {
+      setInterval(() => { 
         getLeaderBoards().then(e => leaderboards.value = e)
       }, 1000*60*5)    
     }
 
+    const refresh = () => {getLeaderBoards().then(e => leaderboards.value = e)}
+
     return {
       leaderboards,
+      refresh
     }
   },
 }
@@ -60,5 +66,15 @@ export default {
   }
   .head {
     background: aliceblue;
+  }
+  .refresh {
+    position: absolute;
+    color: black;
+    top:5px;
+    left:20px;
+    color:white;
+  }
+  .main {
+    position: relative;
   }
 </style>
