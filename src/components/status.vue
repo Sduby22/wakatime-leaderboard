@@ -4,7 +4,7 @@
       <label :for="key">{{ key }}: </label>
       <input type="text" :id="key" :name="key" :disabled="!editing || key==='NAME'" v-model="userProfile[key]">
     </div>
-    <p class="invalid" v-if="userProfile.INVALID">Invalid WAKA_ID or profile unaccessible!</p>
+    <p class="invalid" v-if="userProfile.INVALID" v-html="userProfile.INVALID"></p>
     <div class="buttons">
       <input type="submit" value="submit" v-show="editing">
       <input type="button" value="cancel" @click="editing=0" v-show="editing">
