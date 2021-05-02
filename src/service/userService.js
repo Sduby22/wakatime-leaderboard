@@ -53,10 +53,10 @@ function editProfile(profile) {
   })
 }
 
-function secHumanify(sec, simple=0) {
-  let hr = Math.round(sec/3600)
-  let min = Math.round(sec/60)
-  let remainder = min - hr*60
+function secHumanify(sec, simple = 0) {
+  let hr = Math.floor(sec / 3600)
+  let min = Math.floor(sec / 60)
+  let remainder = min - hr * 60
   let res = ''
   if (!simple) {
     res = hr > 0 ? `${hr} hrs ` : ''
@@ -67,7 +67,7 @@ function secHumanify(sec, simple=0) {
   }
   return res
 }
-  
+
 function getLeaderBoards() {
   return axios.get('/api/leaderboards', {
     headers: {
@@ -75,13 +75,13 @@ function getLeaderBoards() {
       ...authHeaders()
     }
   }).then(resp => {
-      let data = resp.data
-      data.sort((a,b) => {return b.TOTAL - a.TOTAL})
-      for (let x in data) {
-        data[x].TOTAL = secHumanify(data[x].TOTAL, simple)
-        data[x].AVG = secHumanify(data[x].AVG, simple)
-      }
-      return data
+    let data = resp.data
+    data.sort((a, b) => { return b.TOTAL - a.TOTAL })
+    for (let x in data) {
+      data[x].TOTAL = secHumanify(data[x].TOTAL, simple)
+      data[x].AVG = secHumanify(data[x].AVG, simple)
+    }
+    return data
   })
 }
 
