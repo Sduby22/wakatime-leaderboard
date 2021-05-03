@@ -1,6 +1,5 @@
 <template>
   <div class="main">
-  <div class="refresh" @click="refresh">refresh</div>
   <table border="1">
     <thead>
       <tr>
@@ -28,7 +27,12 @@
       </tr>
     </tbody>
   </table>
+  <div class="refresh" :style="refreshStyle" @click="refreshLeaderBoards">last updated: {{lastRefreshed}}</div>
   </div>
+  <br>
+  <a href="https://wakatime.com/dashboard" target="_blank" style="color:black;">Go to Dashboard -></a>
+  <br>
+  <a href="https://wakatime.com/settings/account" target="_blank" style="color:black;">Copy API KEY -></a>
 </template>
 
 <script>
@@ -41,19 +45,34 @@ export default {
   setup() {
     const store = useStore()
     var leaderboards = ref({})
+    var lastRefreshed = ref('')
+    var refreshStyle = ref({
+      color: 'black',
+      fontSize: '14px'
+    })
 
-    if (store.state.user) {
-      getLeaderBoards().then(e => leaderboards.value = e)
-      setInterval(() => { 
-        getLeaderBoards().then(e => leaderboards.value = e)
-      }, 1000*60*5)    
+
+    const refreshLeaderBoards = () => {
+      getLeaderBoards().then(e => {
+        leaderboards.value = e
+        lastRefreshed.value = new Date().toTimeString().split(' ')[0]
+        refreshStyle.value.color = 'green'
+      }).catch(() => {
+        refreshStyle.value.color = 'red'
+        lastRefreshed.value = 'refresh Failed.'
+      })
     }
 
-    const refresh = () => {getLeaderBoards().then(e => leaderboards.value = e)}
+    if (store.state.user) {
+      refreshLeaderBoards()
+      setInterval(refreshLeaderBoards, 1000*60*5)    
+    }
 
     return {
       leaderboards,
-      refresh
+      lastRefreshed,
+      refreshStyle,
+      refreshLeaderBoards,
     }
   },
 }
@@ -66,13 +85,6 @@ export default {
   }
   .head {
     background: aliceblue;
-  }
-  .refresh {
-    position: absolute;
-    color: black;
-    top:5px;
-    left:20px;
-    color:white;
   }
   .main {
     position: relative;
