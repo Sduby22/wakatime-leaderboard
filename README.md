@@ -1,4 +1,18 @@
-# wakatime
+# wakatime-leaderboard
+
+self-hosted wakatime private leaderboard.
+
+## Introduction
+
+The leaderboard use wakatime api to get data. To use the leaderboard,
+a user must:
+
+* Display his code time/languages/systems publicly in his privacy preference.
+* Set Display time to `last 7 days`
+
+### Screenshot
+
+![and](./Screenshot/leaderboards.png)
 
 ## Project setup
 ```
