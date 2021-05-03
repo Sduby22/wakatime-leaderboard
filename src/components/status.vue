@@ -11,7 +11,7 @@
       <input type="button" value="edit" @click="editing=1" v-show="!editing">
       <input type="button" value="logout" @click="logoutRefresh" v-show="!editing">
     </div>
-    <ul class="recommend">
+    <ul class="recommend" v-if="!userProfile.WAKA_ID">
       <li>To join leaderboard, fill your WAKA_ID in the form above</li>
       <li>Get your WAKA_ID <a href="https://wakatime.com/me">here</a>, your WAKA_ID is the string after '@' in the url field</li>
       <li>it's recoomended to set your profile to "public" <a href="https://wakatime.com/settings/profile">here</a></li>
